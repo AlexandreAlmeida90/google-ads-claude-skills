@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Page Audit — {{PAGE_TITLE}}</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 400;
+      color: #2b303b;
+      background: #f5f7fa;
+      line-height: 1.6;
+    }
+
+    /* Hero */
+    .hero {
+      background: #141d2e;
+      color: #fff;
+      padding: 48px 40px 40px;
+    }
+    .hero-inner {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    .hero-label {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+      margin-bottom: 12px;
+    }
+    .hero h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      font-size: 28px;
+      color: #fff;
+      margin-bottom: 8px;
+      line-height: 1.2;
+    }
+    .hero-url {
+      font-size: 13px;
+      color: rgba(255,255,255,0.5);
+      margin-bottom: 32px;
+      word-break: break-all;
+    }
+    .hero-meta {
+      display: flex;
+      gap: 32px;
+      flex-wrap: wrap;
+    }
+    .meta-item { display: flex; flex-direction: column; gap: 4px; }
+    .meta-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: rgba(255,255,255,0.4);
+      font-weight: 500;
+    }
+    .meta-value {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 22px;
+      color: #fff;
+    }
+    .grade-a { color: #34d399; }
+    .grade-b { color: #60a5fa; }
+    .grade-c { color: #fbbf24; }
+    .grade-d { color: #f05942; }
+    .grade-f { color: #e85353; }
+
+    /* Main content */
+    .main {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 40px 40px 80px;
+    }
+
+    /* Section headers */
+    .section-title {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      font-size: 16px;
+      color: #2b303b;
+      margin-bottom: 16px;
+      margin-top: 40px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .section-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: #e5e7eb;
+    }
+
+    /* Category score grid */
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 8px;
+    }
+    .category-card {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 20px;
+    }
+    .category-name {
+      font-size: 12px;
+      font-weight: 500;
+      color: #737b8c;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .category-score {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      font-size: 26px;
+      color: #2b303b;
+    }
+    .category-score span {
+      font-size: 14px;
+      font-weight: 500;
+      color: #737b8c;
+    }
+    .category-bar {
+      height: 4px;
+      background: #e5e7eb;
+      border-radius: 2px;
+      margin-top: 10px;
+      overflow: hidden;
+    }
+    .category-bar-fill {
+      height: 100%;
+      border-radius: 2px;
+      background: #3664f4;
+    }
+    .bar-high { background: #34d399; }
+    .bar-mid  { background: #fbbf24; }
+    .bar-low  { background: #f05942; }
+
+    /* Top fixes */
+    .fixes-list { display: flex; flex-direction: column; gap: 12px; }
+    .fix-item {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-left: 4px solid #f05942;
+      border-radius: 0 12px 12px 0;
+      padding: 16px 20px;
+      display: grid;
+      grid-template-columns: 28px 1fr;
+      gap: 12px;
+      align-items: start;
+    }
+    .fix-number {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      font-size: 18px;
+      color: #f05942;
+      line-height: 1.4;
+    }
+    .fix-title {
+      font-weight: 500;
+      font-size: 14px;
+      color: #2b303b;
+      margin-bottom: 4px;
+    }
+    .fix-desc {
+      font-size: 13px;
+      color: #737b8c;
+      line-height: 1.5;
+    }
+
+    /* Full results */
+    .results-section { display: flex; flex-direction: column; gap: 24px; }
+    .results-category {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .results-category-header {
+      padding: 16px 20px;
+      background: rgba(232,242,255,0.5);
+      border-bottom: 1px solid #e5e7eb;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .results-category-name {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 13px;
+      color: #2b303b;
+    }
+    .results-category-score {
+      font-size: 12px;
+      font-weight: 500;
+      color: #737b8c;
+    }
+    .results-item {
+      display: grid;
+      grid-template-columns: 28px 1fr auto;
+      gap: 12px;
+      align-items: center;
+      padding: 14px 20px;
+      border-bottom: 1px solid #f3f4f6;
+    }
+    .results-item:last-child { border-bottom: none; }
+    .item-number {
+      font-size: 11px;
+      color: #737b8c;
+      font-weight: 500;
+    }
+    .item-text {
+      font-size: 13px;
+      color: #2b303b;
+    }
+
+    /* Badges */
+    .badge {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 20px;
+      white-space: nowrap;
+      font-family: 'Montserrat', sans-serif;
+    }
+    .badge-pass    { background: rgba(52,211,153,0.12); color: #059669; }
+    .badge-fail    { background: rgba(240,89,66,0.12);  color: #dc2626; }
+    .badge-unverified { background: rgba(115,123,140,0.1); color: #737b8c; }
+
+    /* Unverified list */
+    .unverified-box {
+      background: rgba(251,191,36,0.08);
+      border: 1px solid rgba(251,191,36,0.3);
+      border-radius: 12px;
+      padding: 20px 24px;
+    }
+    .unverified-box p {
+      font-size: 13px;
+      color: #92400e;
+      margin-bottom: 12px;
+    }
+    .unverified-box ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .unverified-box li {
+      font-size: 13px;
+      color: #78350f;
+      padding-left: 16px;
+      position: relative;
+    }
+    .unverified-box li::before {
+      content: '⚠';
+      position: absolute;
+      left: 0;
+      font-size: 11px;
+    }
+
+    /* Footer */
+    .footer {
+      background: #141d2e;
+      padding: 24px 40px;
+      text-align: center;
+    }
+    .footer p {
+      font-size: 12px;
+      color: rgba(255,255,255,0.3);
+    }
+    .footer strong { color: rgba(255,255,255,0.6); }
+
+    @media (max-width: 600px) {
+      .hero, .main { padding-left: 20px; padding-right: 20px; }
+      .hero-meta { gap: 20px; }
+      .category-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="hero-inner">
+      <div class="hero-label">Product Page Audit</div>
+      <h1>{{PAGE_TITLE}}</h1>
+      <div class="hero-url">{{PAGE_URL}}</div>
+      <div class="hero-meta">
+        <div class="meta-item">
+          <div class="meta-label">Overall Grade</div>
+          <div class="meta-value {{GRADE_CLASS}}">{{OVERALL_GRADE}}</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">Score</div>
+          <div class="meta-value">{{OVERALL_SCORE}}</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">Audit Date</div>
+          <div class="meta-value" style="font-size:16px; padding-top:4px;">{{AUDIT_DATE}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="main">
+
+    <!-- Category Scores -->
+    <div class="section-title">Category Scores</div>
+    <div class="category-grid">
+      {{CATEGORY_CARDS}}
+    </div>
+
+    <!-- Top 5 Fixes -->
+    <div class="section-title">Top 5 Priority Fixes</div>
+    <div class="fixes-list">
+      {{TOP_FIXES}}
+    </div>
+
+    <!-- Full Audit Results -->
+    <div class="section-title">Full Audit Results</div>
+    <div class="results-section">
+      {{FULL_RESULTS}}
+    </div>
+
+    <!-- Unverified Items -->
+    <div class="section-title">Verify Manually</div>
+    <div class="unverified-box">
+      <p>The following items require a live browser or mobile device to verify:</p>
+      <ul>
+        {{UNVERIFIED_LIST}}
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <p>Prepared by <strong>Beyond Six</strong> · beyondsix.co · {{AUDIT_DATE}}</p>
+  </div>
+
+</body>
+</html>
