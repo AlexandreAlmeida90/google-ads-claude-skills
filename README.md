@@ -23,22 +23,46 @@ A guide for building new Claude Code skills — anatomy, trigger conditions, pro
 
 ---
 
-## Requirements
-
-- [Claude Code](https://claude.ai/code) installed
-- Python 3.9+ (for skills that run scripts)
-- Google Ads API credentials at `~/google-ads.yaml` — required for Search Term Audit only
-
 ## Installation
 
-Copy any skill folder into your Claude Code project:
+**1. Clone this repo:**
 
+```bash
+git clone https://github.com/AlexandreAlmeida90/google-ads-claude-skills.git
 ```
-.claude/skills/search-term-audit/
-.claude/skills/product-feed-optimization/
-.claude/skills/product-page-audit/
-.claude/skills/rsa-copywriter/
-.claude/skills/skill-create/
+
+**2. Copy the skill(s) you want into your Claude Code project:**
+
+```bash
+cp -r google-ads-claude-skills/search-term-audit your-project/.claude/skills/
+cp -r google-ads-claude-skills/product-feed-optimization your-project/.claude/skills/
+cp -r google-ads-claude-skills/product-page-audit your-project/.claude/skills/
+cp -r google-ads-claude-skills/rsa-copywriter your-project/.claude/skills/
+cp -r google-ads-claude-skills/skill-create your-project/.claude/skills/
+```
+
+**3. Install dependencies** (see each skill's README for specifics):
+
+```bash
+pip install pandas openpyxl
 ```
 
 Claude activates each skill automatically when the task matches — no slash commands needed.
+
+---
+
+## Requirements
+
+- [Claude Code](https://claude.ai/code) installed
+- Python 3.9+
+- Google Ads API credentials at `~/google-ads.yaml` — required for Search Term Audit only
+
+---
+
+## Disclaimer
+
+These skills are provided as-is for educational and productivity purposes. Use them at your own risk.
+
+We are not responsible for any changes made to your Google Ads accounts, ad spend, feed submissions, or business outcomes resulting from the use of these skills. Always review Claude's output before applying changes to live accounts or uploading files to Google Merchant Center.
+
+These skills are not affiliated with or endorsed by Google.
