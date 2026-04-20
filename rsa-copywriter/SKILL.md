@@ -218,7 +218,7 @@ Read `references/swipe-file.md` BEFORE writing any copy. Study the tone, structu
 **Tone & style — match the swipe file**
 - Open with a strong **action verb** directed at the reader: "Improve", "Boost", "Reduce", "Support", "Get", "Try", "Discover"
   - BAD: "Women's probiotic with 60B CFU..." (feature-first, weak opener)
-  - GOOD: "Improve Your Gut Health With Vital Flora — 60 Strains, No Refrigeration Needed." (action verb + benefit + feature)
+  - GOOD: "Improve Your Gut Health With Our Daily Probiotic — 60 Strains, No Refrigeration Needed." (action verb + benefit + feature)
 - Follow the swipe file pattern: **[Action verb] [benefit/outcome] + [With our product/feature]. [Proof or CTA].**
   - Example: "Improve Your Digestion Naturally With Our 100% Natural Probiotic Supplement. Order Today." (90 chars)
   - Example: "Ease Joint Pain Fast with our Turmeric Curcumin Capsules. Feel Results in 4 Weeks." (83 chars)

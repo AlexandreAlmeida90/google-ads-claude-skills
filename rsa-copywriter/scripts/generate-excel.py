@@ -7,7 +7,7 @@ Usage:
 
 Input JSON format:
 {
-  "client": "Vital Planet",
+  "client": "Your Brand",
   "campaign": "Search - NonBrand",
   "ad_group": "Women's Probiotics",
   "final_url": "https://...",

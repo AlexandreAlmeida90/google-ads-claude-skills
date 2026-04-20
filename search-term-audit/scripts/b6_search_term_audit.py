@@ -301,7 +301,7 @@ def classify_intent_llm(terms, account_name, brand_terms, product_terms, competi
         f"Product lines: {product_str}\n"
         f"Competitor brands: {comp_str}\n\n"
         "Rules:\n"
-        "- Typos, abbreviations, and concatenations of the listed names still count (e.g. 'vita flora' = 'vital flora' → product)\n"
+        "- Typos, abbreviations, and concatenations of the listed names still count (e.g. 'acmebrnd' = 'acme brand' → brand)\n"
         f"- These words are distinctive to this brand/products: {brand_words_str}\n"
         "  If a search term uses one of these words as a modifier, lean toward brand or product even if the exact product isn't listed\n"
         "- Default to generic_mid when intent is unclear\n"

@@ -7,11 +7,11 @@ Generates optimised product titles using the Claude API.
 
 Workflow:
   Step 1 — Generate 15 sample titles for review and approval:
-    python b6_title_optimizer.py --feed=products.tsv --brand=VitalPlanet --vertical=supplements --mode=sample --output=data/
+    python b6_title_optimizer.py --feed=products.tsv --brand=YourBrand --vertical=supplements --mode=sample --output=data/
 
   Step 2 — After approval, generate titles for flagged products or the full feed:
-    python b6_title_optimizer.py --feed=products.tsv --brand=VitalPlanet --vertical=supplements --mode=full --scope=flagged --output=data/
-    python b6_title_optimizer.py --feed=products.tsv --brand=VitalPlanet --vertical=supplements --mode=full --scope=all --output=data/
+    python b6_title_optimizer.py --feed=products.tsv --brand=YourBrand --vertical=supplements --mode=full --scope=flagged --output=data/
+    python b6_title_optimizer.py --feed=products.tsv --brand=YourBrand --vertical=supplements --mode=full --scope=all --output=data/
 
 Requirements:
   pip install pandas openpyxl anthropic
@@ -473,7 +473,7 @@ def main():
     parser.add_argument('--feed',     required=True,
                         help='Path to the TSV feed file')
     parser.add_argument('--brand',    required=True,
-                        help='Brand name (e.g. VitalPlanet)')
+                        help='Brand name (e.g. YourBrand)')
     parser.add_argument('--vertical', default=None,
                         help='Override vertical (supplements, apparel, electronics, home, food, pet, automotive, media, general)')
     parser.add_argument('--mode',     required=True,  choices=['sample', 'full'],
