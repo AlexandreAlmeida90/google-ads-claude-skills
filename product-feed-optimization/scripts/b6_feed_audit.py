@@ -28,7 +28,18 @@ from openpyxl.worksheet.table import Table, TableStyleInfo
 # ── Vertical definitions ───────────────────────────────────────────────────────
 
 VERTICAL_CATEGORY_IDS = {
-    'apparel':      {'1604', '166', '5697', '2271', '187', '178'},
+    # Specific verticals first — checked before broader parent categories
+    'watches':        {'201', '5122', '5123'},
+    'jewelry':        {'188', '189', '190', '191', '192', '194', '196', '197', '200', '6463'},
+    'footwear':       {'187', '5387'},
+    'bags':           {'5181'},
+    'beauty':         {'473', '2915'},
+    'furniture':      {'436'},
+    'sporting_goods': {'988'},
+    'toys':           {'1239'},
+    'baby':           {'537'},
+    # Broader verticals
+    'apparel':      {'1604', '166', '5697', '2271', '178'},
     'supplements':  {'525', '5413'},
     'pet':          {'1', '2', '3', '4', '5', '5081', '5086'},
     'electronics':  {'222', '412'},
@@ -39,11 +50,22 @@ VERTICAL_CATEGORY_IDS = {
 }
 
 VERTICAL_KEYWORDS = {
-    'apparel':     ['shirt', 'dress', 'pants', 'jacket', 'shoe', 'clothing', 'apparel', 'fashion', 'hoodie', 'socks', 'hat', 'jeans'],
+    # Specific verticals first — matched before broader parent categories
+    'watches':        ['watch', 'chronograph', 'quartz', 'automatic', 'timepiece', 'wristwatch', 'smartwatch', 'horology'],
+    'jewelry':        ['ring', 'necklace', 'bracelet', 'earring', 'pendant', 'diamond', 'gemstone', 'brooch', 'anklet', 'jewellery', 'jewelry'],
+    'footwear':       ['shoe', 'boot', 'sneaker', 'sandal', 'heel', 'loafer', 'trainer', 'stiletto', 'moccasin', 'slipper', 'footwear'],
+    'bags':           ['bag', 'handbag', 'backpack', 'wallet', 'purse', 'tote', 'clutch', 'luggage', 'suitcase', 'briefcase', 'duffel'],
+    'beauty':         ['serum', 'foundation', 'lipstick', 'mascara', 'cleanser', 'toner', 'shampoo', 'conditioner', 'moisturiser', 'moisturizer', 'makeup', 'concealer', 'blush', 'eyeshadow'],
+    'furniture':      ['sofa', 'couch', 'wardrobe', 'cabinet', 'dresser', 'ottoman', 'bookcase', 'nightstand', 'armchair', 'sideboard'],
+    'sporting_goods': ['gym', 'fitness', 'yoga', 'cycling', 'tennis', 'football', 'golf', 'swimming', 'hiking', 'workout', 'barbell', 'dumbbell', 'racket', 'treadmill'],
+    'toys':           ['toy', 'puzzle', 'lego', 'doll', 'board game', 'playset', 'action figure', 'stuffed animal', 'building blocks'],
+    'baby':           ['baby', 'infant', 'toddler', 'newborn', 'diaper', 'stroller', 'crib', 'onesie', 'nursery', 'pacifier', 'pram'],
+    # Broader verticals
+    'apparel':     ['shirt', 'dress', 'pants', 'jacket', 'clothing', 'apparel', 'fashion', 'hoodie', 'socks', 'hat', 'jeans'],
     'supplements': ['probiotic', 'vitamin', 'supplement', 'capsule', 'softgel', 'enzyme', 'protein', 'collagen', 'omega', 'prebiotic'],
     'pet':         ['dog', 'cat', 'pet', 'puppy', 'kitten', 'bird', 'reptile', 'aquarium', 'paw', 'feline', 'canine'],
     'electronics': ['phone', 'laptop', 'camera', 'battery', 'cable', 'charger', 'speaker', 'headphone', 'tablet', 'monitor'],
-    'home':        ['furniture', 'sofa', 'lamp', 'rug', 'shelf', 'decor', 'mattress', 'pillow', 'curtain', 'chair'],
+    'home':        ['lamp', 'rug', 'shelf', 'decor', 'mattress', 'pillow', 'curtain', 'chair', 'furniture'],
     'food':        ['food', 'snack', 'beverage', 'drink', 'coffee', 'tea', 'organic', 'protein bar', 'granola'],
     'media':       ['book', 'dvd', 'game', 'software', 'music', 'album', 'film', 'blu-ray'],
     'automotive':  ['car', 'vehicle', 'auto', 'truck', 'motorcycle', 'tire', 'brake', 'motor'],
@@ -56,6 +78,24 @@ REQUIRED_UNIVERSAL = [
 ]
 
 REQUIRED_EXTRA = {
+    # Watches: item_group_id for variant grouping (strap colour, dial colour)
+    'watches':        ['item_group_id'],
+    # Jewelry: material and colour are primary search attributes; item_group_id for size/metal variants
+    'jewelry':        ['item_group_id', 'material', 'color'],
+    # Footwear: same as apparel — size, colour, gender, age_group are required by Google
+    'footwear':       ['item_group_id', 'size', 'color', 'gender', 'age_group'],
+    # Bags: material is a primary search attribute; item_group_id for colour/size variants
+    'bags':           ['item_group_id', 'material'],
+    # Beauty: item_group_id for shade/scent/size variants
+    'beauty':         ['item_group_id'],
+    # Furniture: no extra required attrs — Google does not mandate demographic/variant attrs
+    'furniture':      [],
+    # Sporting goods: no extra required attrs — sport type captured in title/product_type
+    'sporting_goods': [],
+    # Toys: age_group required — Google uses it for filtering in toy search results
+    'toys':           ['age_group'],
+    # Baby: age_group required — primary filter for all baby/toddler products
+    'baby':           ['age_group'],
     # Apparel: variants + demographic attributes are required by Google
     'apparel':     ['item_group_id', 'age_group', 'gender', 'color', 'size'],
     # Supplements: variants expected (count, size, flavor)
@@ -94,6 +134,24 @@ RECOMMENDED_CORE = [
 ]
 
 RECOMMENDED_EXTRA = {
+    # Watches: size_system for case diameter (mm); material for case/strap; colour for dial/strap
+    'watches':        ['size_system', 'material', 'color'],
+    # Jewelry: ring size, metal purity; pattern for engraved/textured designs
+    'jewelry':        ['size', 'size_system', 'pattern'],
+    # Footwear: size system (US/EU/UK), size type (wide/narrow), material (leather/mesh), pattern
+    'footwear':       ['size_system', 'size_type', 'material', 'pattern'],
+    # Bags: colour, size (dimensions/capacity), pattern (logo/plain)
+    'bags':           ['color', 'size', 'pattern'],
+    # Beauty: material is sometimes used for key active ingredients
+    'beauty':         ['material'],
+    # Furniture: material (wood/metal/fabric), colour, size (dimensions — W×D×H)
+    'furniture':      ['material', 'color', 'size'],
+    # Sporting goods: material, colour, size, plus demographic filters
+    'sporting_goods': ['material', 'color', 'size', 'gender', 'age_group'],
+    # Toys: material (safety relevance), colour, size, bundle/multipack signals
+    'toys':           ['material', 'color', 'size', 'is_bundle', 'multipack'],
+    # Baby: material (BPA-free/organic), size (clothing), gender, size system
+    'baby':           ['material', 'size', 'gender', 'color', 'size_system'],
     # Apparel: size system/type are structural metadata for apparel search filtering
     # color/size/gender/age_group are REQUIRED for apparel (in REQUIRED_EXTRA above)
     # material/pattern promoted to conditional (feed-signal based) — no longer apparel-only
@@ -162,15 +220,24 @@ ALL_ATTRIBUTES = [
 ]
 
 VERTICAL_LABELS = {
-    'apparel':     'Apparel & Accessories',
-    'supplements': 'Supplements & Health',
-    'pet':         'Pet Supplies',
-    'electronics': 'Electronics',
-    'home':        'Home & Garden',
-    'food':        'Food & Grocery',
-    'media':       'Media & Entertainment',
-    'automotive':  'Automotive',
-    'general':     'General',
+    'watches':        'Watches & Accessories',
+    'jewelry':        'Jewelry & Accessories',
+    'footwear':       'Footwear',
+    'bags':           'Bags & Luggage',
+    'beauty':         'Beauty & Personal Care',
+    'furniture':      'Furniture & Home',
+    'sporting_goods': 'Sporting Goods & Fitness',
+    'toys':           'Toys & Games',
+    'baby':           'Baby & Toddler',
+    'apparel':        'Apparel & Accessories',
+    'supplements':    'Supplements & Health',
+    'pet':            'Pet Supplies',
+    'electronics':    'Electronics',
+    'home':           'Home & Garden',
+    'food':           'Food & Grocery',
+    'media':          'Media & Entertainment',
+    'automotive':     'Automotive',
+    'general':        'General',
 }
 
 # Valid values for key attributes
