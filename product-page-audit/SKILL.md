@@ -1,20 +1,20 @@
 ---
 name: product-page-audit
 description: >
-  Audits a Shopify product page against a 32-item CRO checklist covering 7 categories:
-  Above the Fold, Trust & Social Proof, Product Copy, Variants & Options, Page Speed,
-  Mobile UX, and SEO & Ads Alignment. Scores each item Pass/Fail/Unverified, gives an
-  overall grade (A–F), prioritizes the top fixes by impact, and always generates a
-  branded HTML report saved to data/audits/. USE WHEN: user provides a product page URL
-  and asks for an audit, CRO review, page optimization check, or "what should I fix on
-  this product page".
+  Audits a Shopify or WooCommerce product page against a 32-item CRO checklist covering
+  7 categories: Above the Fold, Trust & Social Proof, Product Copy, Variants & Options,
+  Page Speed, Mobile UX, and SEO & Ads Alignment. Auto-detects the platform, scores each
+  item Pass/Fail/Unverified, gives an overall grade (A–F), prioritizes the top fixes by
+  impact, and always generates a branded HTML report saved to data/audits/. USE WHEN:
+  user provides a product page URL and asks for an audit, CRO review, page optimization
+  check, Shopify audit, WooCommerce audit, or "what should I fix on this product page".
 ---
 
-# Shopify Product Page Audit
+# Product Page Audit (Shopify + WooCommerce)
 
 ## Overview
 
-Audits a Shopify product page against 32 CRO criteria. Outputs a scored breakdown in chat, ranks the top 5 highest-impact fixes, and always generates a branded HTML report saved to `data/audits/`.
+Audits a Shopify or WooCommerce product page against 32 CRO criteria. Outputs a scored breakdown in chat, ranks the top 5 highest-impact fixes, and always generates a branded HTML report saved to `data/audits/`.
 
 ## Checklist
 
@@ -39,22 +39,55 @@ Detect the system temp directory first:
 curl -s -L "[URL]" -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36" -o "[TEMP_DIR]/product-audit.html"
 ```
 
-Then extract:
+### Step 2a — Detect the platform
+
+Grep the downloaded HTML to identify the platform. Signals:
+
+**Shopify:**
+- `cdn.shopify.com` in asset URLs
+- `Shopify.theme` or `window.Shopify` JS globals
+- `shopify-section` div IDs
+- `.myshopify.com` domain references
+
+**WooCommerce:**
+- `woocommerce` class names (body or wrappers)
+- `wp-content/plugins/woocommerce` in asset paths
+- `generator` meta tag mentioning WooCommerce or WordPress
+- `wc-` prefixed classes
+
+Note the platform — it changes which selectors to look for in Step 2b. If neither matches clearly, default to generic selectors and note "Platform: Unknown" in the report.
+
+### Step 2b — Extract page elements
+
+**Common to both platforms:**
 - `<title>` tag and `<meta name="description">` / `og:description`
-- H1 tags (product title)
-- WooCommerce price elements (`<bdi>`, `.price`)
-- ATC button text
-- `woocommerce-product-details__short-description` content
-- Accordion / tab content
-- Image `src` and `alt` attributes
-- Trust badge / icon-box text
+- H1 tag (product title)
 - Schema markup (`application/ld+json`) — check for `@type: Product`
-- Review widget references (e.g. HelpfulCrowd, Yotpo, Judge.me)
+- Image `src` and `alt` attributes
+- Review widget references (e.g. HelpfulCrowd, Yotpo, Judge.me, Stamped, Reviews.io)
 - Scarcity/urgency text near ATC
 
-Note: JavaScript-rendered content (review widgets, sticky buttons, variant image switching) may still be unverifiable via HTML alone — use Playwright screenshots (Step 2b) to cover as many of these as possible.
+**Shopify-specific selectors:**
+- Price: `.price`, `.price-item`, `[data-price]`, `.product__price`
+- ATC button: `.product-form__buttons button`, `[name="add"]`, `button[type="submit"]` inside `product-form`
+- Product description: `.product__description`, `.rte`, `.product-single__description`
+- Variants: `.product-form__input`, `variant-selects`, `<fieldset>` with variant options
+- Trust badges: `.icon-with-text`, `.shopify-section--trust-badges`
 
-### Step 2b — Take Playwright screenshots
+**WooCommerce-specific selectors:**
+- Price: `<bdi>`, `.price`, `.woocommerce-Price-amount`
+- ATC button: `.single_add_to_cart_button`, `button.alt`
+- Product description: `.woocommerce-product-details__short-description`, `#tab-description`
+- Variants: `.variations_form`, `<select>` inside `.variations`
+- Trust badges: `.icon-box`, custom theme classes (varies)
+
+**Also extract (both platforms):**
+- Accordion / tab content (FAQs, shipping, returns)
+- Sticky ATC bar markup (often lazy-loaded — may be Unverified without Playwright)
+
+Note: JavaScript-rendered content (review widgets, sticky buttons, variant image switching) may still be unverifiable via HTML alone — use Playwright screenshots (Step 2c) to cover as many of these as possible.
+
+### Step 2c — Take Playwright screenshots
 
 After fetching the raw HTML, take screenshots to verify visual and mobile-specific items. This resolves items that raw HTML alone cannot confirm (sticky ATC, mobile layout, above-the-fold content, review widget rendering).
 
