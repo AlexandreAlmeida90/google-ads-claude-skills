@@ -1,0 +1,41 @@
+{
+  "thresholds": {
+    "spend_multiplier": 2.0,
+    "high_cpa_multiplier": 3.0,
+    "min_spend_usd": 5.0
+  },
+
+  "structural_waste": {
+    "jobs": ["job", "jobs", "career", "careers", "salary", "hiring", "vacancy", "employment", "work for"],
+    "diy": ["diy", "homemade", "make your own", "how to make", "build your own", "make at home"],
+    "free": ["free download", "free pdf", "free template", "free sample", "free trial"],
+    "platforms": ["reddit", "pinterest", "youtube", "tiktok", "instagram", "facebook", "twitter", "quora", "wiki", "wikipedia"],
+    "media": ["images", "photos", "pictures", "wallpaper", "meme", "video", "videos", "gif"],
+    "account": ["login", "sign in", "account", "password", "forgot password", "register"],
+    "complaints": ["scam", "legit", "complaint", "refund", "fraud", "fake", "lawsuit"],
+    "wholesale": ["wholesale", "bulk order", "distributor", "dropship", "dropshipping", "reseller"],
+    "unrelated_research": ["meaning", "definition", "what does", "history of", "wikipedia"]
+  },
+
+  "strip_modifiers": {
+    "quality": ["best", "top", "good", "great", "premium", "quality", "recommended", "popular", "leading", "number one", "#1"],
+    "price": ["cheap", "cheapest", "affordable", "budget", "discount", "sale", "deal", "low cost", "inexpensive", "bargain", "value"],
+    "intent": ["buy", "purchase", "order", "get", "find", "shop", "shopping", "shop for"],
+    "review": ["review", "reviews", "rating", "ratings", "rated", "comparison", "compare", "vs", "versus", "alternative"],
+    "location": ["near me", "nearby", "local", "online", "australia", "usa", "uk", "canada", "nz", "new zealand"],
+    "time": ["2024", "2025", "2026", "new", "latest", "updated", "now"],
+    "question": ["how to", "what is", "what are", "where to", "why", "which", "when", "can i", "should i"],
+    "availability": ["in stock", "available", "same day", "fast shipping", "free shipping", "delivery"]
+  },
+
+  "intent_classification": {
+    "bottom_signals": ["buy", "order", "near me", "where to buy", "discount", "cheapest", "coupon", "purchase", "affordable", "cheap", "shop"],
+    "top_signals": ["what is", "what are", "how does", "how do", "how to", "why do", "why is", "benefits of", "history of", "causes of", "definition of", "explained", "guide to"]
+  },
+
+  "output": {
+    "top_waste_count": 10,
+    "top_clusters_count": 5,
+    "cluster_min_terms": 2
+  }
+}
