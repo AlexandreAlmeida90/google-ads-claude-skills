@@ -200,7 +200,7 @@ def _regex_classify(term, brand_terms, product_terms, competitor_terms, config):
     """
     Fast regex pre-filter. Returns a label string or None (send to LLM).
     Priority: brand > product > competitors > generic_bottom > generic_top.
-    Also matches space/hyphen-stripped variants (e.g. "vitalplanet" → "vital planet").
+    Also matches space/hyphen-stripped variants (e.g. "yourbrand" → "your brand").
     """
     t = term.lower()
     t_nospace = t.replace(" ", "").replace("-", "")
